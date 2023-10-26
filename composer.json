@@ -1,0 +1,20 @@
+{
+    "name": "devraiz/files",
+    "description": "Classes para manipular arquivos",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Emerson Silveira",
+            "email": "contatodevraiz@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "aws/aws-sdk-php": "^3.261"
+    },
+    "autoload": {
+        "psr-4": {
+            "devraiz\\": "src/"
+        }
+    }
+}
