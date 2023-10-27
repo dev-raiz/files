@@ -11,7 +11,7 @@ class FileService implements FileServiceInterface
     public function save(File $file): array
     {
         if (file_exists($file->getPath()) === false) {
-            mkdir($file->getPath(), $file->getPermission(), true);
+            mkdir($file->getPath(), intval($file->getPermission()), true);
         }
         
         $contents = base64_decode($file->getContents());
