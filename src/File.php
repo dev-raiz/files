@@ -240,7 +240,7 @@ class File
     public function getMimeTypeExtension(string $mimeType) : string {
 
         $vector1 = explode(';', $mimeType);
-        $vector2 = explode('/', $$vector1[0]);
+        $vector2 = explode('/', $vector1[0]);
         
         $extension = end($vector2);
 
