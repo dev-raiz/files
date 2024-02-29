@@ -229,19 +229,21 @@ class File
     {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 2);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HEADER, true);
+
         $result = curl_exec($curl);
         curl_close($curl);
-        
+
         return base64_encode($result);
     }
 
-    public function getMimeTypeExtension(string $mimeType) : string {
-
+    public function getMimeTypeExtension(string $mimeType): string
+    {
         $vector1 = explode(';', $mimeType);
         $vector2 = explode('/', $vector1[0]);
-        
+
         $extension = end($vector2);
 
         return $extension;
