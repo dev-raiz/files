@@ -233,10 +233,31 @@ class File
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HEADER, true);
 
-        $result = curl_exec($curl);
+        $tentativa = 5;
+
+        while ($tentativa > 0) {
+            $result = curl_exec($curl);
+            $error  = curl_error($curl);
+
+            # Pega o código de retorno do servidor 200/503
+            $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+            # Pega o tamanho total de todos os cabeçalhos recebidos
+            $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+
+            if ($error) {
+                throw new \Exception($error, 500);
+            }
+
+            $tentativa = ($http_code == 503) ? --$tentativa : 0;
+        }
+
+        # Remove todo o cabeçalho recebido
+        $payload = substr($result, $header_size);
+
         curl_close($curl);
 
-        return base64_encode($result);
+        return base64_encode($payload);
     }
 
     public function getMimeTypeExtension(string $mimeType): string
