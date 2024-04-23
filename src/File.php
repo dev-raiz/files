@@ -257,6 +257,10 @@ class File
 
         curl_close($curl);
 
+        if (empty($payload) === true) {
+            throw new \Exception('Não foi possível pegar o conteúdo do arquivo! Classe: devraiz\File Método: getBase64ByUrl', 500);
+        }
+
         return base64_encode($payload);
     }
 
